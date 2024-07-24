@@ -16,9 +16,10 @@
 #define _MICROROS_CLIENT_ZEPHYR_TRANSPORT_H_
 
 #include <unistd.h>
+#include <version.h>
 
 #include <sys/types.h>
-#if ZEPHYR_VERSION_CODE >= ZEPHYR_VERSION(3,2,0)
+#if ZEPHYR_VERSION_CODE >= ZEPHYR_VERSION(3,1,0)
 #include <zephyr/posix/sys/socket.h>
 #include <zephyr/posix/poll.h>
 #else
