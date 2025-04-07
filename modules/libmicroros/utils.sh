@@ -9,6 +9,6 @@ remove_meta() {
 }
 
 update_meta_from_zephyr_config() {
-      AUX_VARIABLE=$(grep $1 $ZEPHYR_CONF_FILE | awk -F '=' '{gsub(/"/, "", $2); print $2}'); \
+      AUX_VARIABLE=$(grep $1 $ZEPHYR_CONF_FILE | gawk -F '=' '{gsub(/"/, "", $2); print $2}'); \
       update_meta "$2" "$3=$AUX_VARIABLE"; \
 }

@@ -10,6 +10,15 @@ else()
 set(submake "make")
 endif()
 
+# Can't use CMAKE_SYSTEM_NAME because it is set to "Generic" for embedded development.
+if (CMAKE_HOST_WIN32)
+    set(mkfile "libmicroros_windows.mk")
+    message(STATUS ">>> libmicroros Windows")
+else()
+    set(mkfile "libmicroros.mk")
+    message(STATUS ">>> libmicroros Linux")
+endif()
+
 # micro-ROS library
 
 zephyr_get_include_directories_for_lang_as_string(       C includes)
@@ -38,7 +47,7 @@ externalproject_add(libmicroros_project
     BINARY_DIR ${MICROROS_DIR}
     CONFIGURE_COMMAND ""
     BUILD_COMMAND
-        ${submake} -f libmicroros.mk
+        ${submake} -f ${mkfile}
             X_CFLAGS=${external_project_cflags}
             X_CXXFLAGS=${external_project_cxxflags}
             X_CC=${CMAKE_C_COMPILER}
@@ -60,7 +69,7 @@ target_include_directories(microros INTERFACE ${MICROROS_DIR}/include)
 
 execute_process(
     COMMAND
-        make -f libmicroros.mk get_package_names
+        make -f ${mkfile} get_package_names
             COMPONENT_PATH=${MICROROS_DIR}
     WORKING_DIRECTORY
         ${MICROROS_DIR}
